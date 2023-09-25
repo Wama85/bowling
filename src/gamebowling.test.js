@@ -13,12 +13,20 @@ describe("JUEGO BOWLING", () => {
     escore.rollmany(20,1)
     expect(escore.getScore()).toEqual(20);
   });
-  it("Probar 1", () => {
+  it("Probar 17,0", () => {
     const escore=new game();
     escore.rollSpare();
      escore.roll(3);
     escore.rollmany(17,0)
     expect(escore.getScore()).toEqual(16);
+  });
+  it("Probar strike", () => {
+    const escore=new game();
+    escore.roll(10);
+    escore.roll(3);
+    escore.roll(4);
+    escore.rollmany(16,0)
+    expect(escore.getScore()).toEqual(24);
   });
 
 });
@@ -33,16 +41,23 @@ class game{
     this.score +=pins;
     this.rolls.push(pins);
   }
-  getScore(){
+ 
+
+  getScore() {
     let totalScore = 0;
     let frameIndex = 0;
   
     for (let frame = 0; frame < 10; frame++) {
-      if (this.rolls[frameIndex] + this.rolls[frameIndex + 1] === 10) {
-      
+      if (this.rolls[frameIndex] === 10) {
+        // Strike
+        totalScore += 10 + this.rolls[frameIndex + 1] + this.rolls[frameIndex + 2];
+        frameIndex += 1;
+      } else if (this.rolls[frameIndex] + this.rolls[frameIndex + 1] === 10) {
+        // Spare
         totalScore += 10 + this.rolls[frameIndex + 2];
         frameIndex += 2;
       } else {
+        // Normal frame
         totalScore += this.rolls[frameIndex] + this.rolls[frameIndex + 1];
         frameIndex += 2;
       }
@@ -51,12 +66,6 @@ class game{
     return totalScore;
   }
  
-  
-  
-  
-  
-  
-  
   rollmany(n,pins){
    for(let i=0;i<n;i++){
       this.roll(pins)
