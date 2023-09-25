@@ -1,15 +1,15 @@
 
 
 describe("JUEGO BOWLING", () => {
+  
   it("Dato vacio", () => {
     const escore=new game();
+    escore.rollmany(20,0)
     expect(escore.getScore()).toEqual(0);
   });
   it("Para el numero 20", () => {
     const escore=new game();
-    for(let i=0;i<20;i++){
-      escore.roll(1);
-    }
+    escore.rollmany(20,1)
     expect(escore.getScore()).toEqual(20);
   });
 
@@ -25,5 +25,11 @@ class game{
   }
   getScore(){
     return this.score;
+  }
+  rollmany(n,pins){
+   for(let i=0;i<n;i++){
+      this.roll(pins)
+    }
+
   }
 }
