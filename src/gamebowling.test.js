@@ -28,6 +28,12 @@ describe("JUEGO BOWLING", () => {
     escore.rollmany(16,0)
     expect(escore.getScore()).toEqual(24);
   });
+  it("Juego perfecto", () => {
+    const escore=new game();
+    escore.rollmany(12,10)
+    expect(escore.getScore()).toEqual(300);
+  });
+
 
 });
 
